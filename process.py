@@ -10,9 +10,10 @@ frames = []
 while success:
     success, image = vidcap.read()
     print('Read a new frame: ', success)
-    frames.append(image)
-    # cv2.imwrite("frame%d.jpg" % count, image)
-    count += 1
+    if success:
+        frames.append(image)
+        # cv2.imwrite("frame%d.jpg" % count, image)
+        count += 1
 
 x = []
 y = []
