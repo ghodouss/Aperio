@@ -44,10 +44,10 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-for iter in range(3):
-    vidcap = cv2.VideoCapture("vid" + str(iter) + ".mp4")
+def process_file(filename):
+    vidcap = cv2.VideoCapture(filename)
     fps = float(vidcap.get(cv2.CAP_PROP_FPS))
-    out = cv2.VideoWriter("vid" + str(iter+1) + ".mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
+    out = cv2.VideoWriter("/tmp/output.mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
 
     new_img = None
     success, prev_img = vidcap.read()
@@ -74,4 +74,6 @@ for iter in range(3):
 
     vidcap.release()
     out.release()
+
+    return "/tmp/output.mp4"
 
