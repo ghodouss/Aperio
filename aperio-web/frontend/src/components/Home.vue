@@ -91,7 +91,7 @@
     data () {
       return {
         dropzoneOptions: {
-          url: 'https://httpbin.org/post',
+          url: 'http://127.0.0.1:5000/',
           thumbnailWidth: 150,
           maxFilesize: 0.5,
           headers: { 'My-Awesome-Header': 'header value' }
