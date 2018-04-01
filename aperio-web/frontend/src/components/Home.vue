@@ -58,7 +58,7 @@
             </v-flex>
           </v-layout>
         </section>
-        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
+        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
 
       </v-container>
     </v-content>
@@ -77,43 +77,51 @@
   }
 </style>
 
-
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
-
-<script>
+<script >
   import vue2Dropzone from 'vue2-dropzone'
   import 'vue2-dropzone/dist/vue2Dropzone.css'
-import axios from 'axios'
-export default {
-  data () {
-    return {
-      randomNumber: 0
-    }
-  },
-  methods: {
-    getRandomInt (min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min + 1)) + min
+  import axios from 'axios'
+  export default {
+    name: 'app',
+    components: {
+      vueDropzone: vue2Dropzone
     },
-    getRandom () {
-      // this.randomNumber = this.getRandomInt(1, 100)
-      this.randomNumber = this.getRandomFromBackend()
+    data () {
+      return {
+        dropzoneOptions: {
+          url: 'https://httpbin.org/post',
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+          headers: { 'My-Awesome-Header': 'header value' }
+        },
+        randomNumber: 0
+      }
     },
-    getRandomFromBackend () {
-      const path = `http://localhost:5000/api/random`
-      axios.get(path)
-      .then(response => {
-        this.randomNumber = response.data.randomNumber
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    methods: {
+      getRandomInt (min, max) {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      },
+      getRandom () {
+        // this.randomNumber = this.getRandomInt(1, 100)
+        this.randomNumber = this.getRandomFromBackend()
+      },
+      getRandomFromBackend () {
+        const path = `http://localhost:5000/api/random`
+        axios.get(path)
+        .then(response => {
+          this.randomNumber = response.data.randomNumber
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+    },
+    created () {
+      this.getRandom()
     }
-  },
-  created () {
-    this.getRandom()
   }
-}
 </script>
