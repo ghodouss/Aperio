@@ -1,7 +1,11 @@
-from flask import Flask, render_template, jsonify, request, send_file
+from flask import Flask, render_template, jsonify, request, send_file, send_from_directory
 from random import *
 from flask_cors import CORS
 import requests
+
+import os
+os.sys.path.append("/Users/markiewagner/Projects/Aperio/src")
+
 from enhance_video import process_file
 
 app = Flask(__name__,
@@ -15,8 +19,11 @@ def process_video():
     files = request.files
 
     for key, value in files.items():
-        value.save("/tmp/input.mp4")
-        process_file("/tmp/input.mp4")
+        value.save("/Users/markiewagner/Projects/Aperio/aperio-web/frontend/src/assets/input.mp4")
+        #process_file("/Users/markiewagner/Projects/Aperio/aperio-web/frontend/src/assets/input.mp4")
+    print("almost done")
+    return "hi"
+    #return send_from_directory("/tmp", "output.mp4", as_attachment=True)
 
 
 @app.route('/', defaults={'path': ''})

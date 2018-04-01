@@ -29,7 +29,9 @@
                     <v-card class="elevation-0 transparent ">
                       <div v-if="playingVideos">
                         <v-card-title primary-title class="layout justify-left">
-                          <div class="headline" style="font-size:30px; line-height: 40px; text-align: left; font-family:NexaBold; font-weight:30px;"> Processing Video... </div>
+                          <video width="320" height="240" controls>
+                            <source type="video/mp4" src="../assets/output.mp4">
+                          </video>
                         </v-card-title>
                       </div>
                       <div v-else>
@@ -53,11 +55,17 @@
 
                   <v-flex xs6 >
                     <v-card class="elevation-0 transparent ">
-                      <vue-dropzone ref="myVueDropzone"  :options="dropzoneOptions" acceptedFileTypes=".mp4" v-on:vdropzone-success="showSuccess" :include-styling="false"
-                                    id="customdropzone"> </vue-dropzone>
+                      <div v-if="playingVideos">
+                        <v-card-title primary-title class="layout justify-left">
+                          <video width="320" height="240" controls>
+                            <source type="video/mp4" src="../assets/input.mp4">
+                          </video>
+                        </v-card-title>
+                      </div>
+                      <div v-else>
+                        <vue-dropzone ref="myVueDropzone"  :options="dropzoneOptions" acceptedFileTypes=".mp4" v-on:vdropzone-success="showSuccess" :include-styling="false"
+                                      id="customdropzone"> </vue-dropzone>
 
-                      <div v-if="playingVideos" >
-                        hi
                       </div>
                     </v-card>
                   </v-flex>
@@ -155,6 +163,7 @@
     },
     methods: {
       showSuccess (file, response) {
+        console.log('HERE')
         this.playingVideos = true
       },
       template: function () {
