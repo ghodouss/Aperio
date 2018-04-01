@@ -44,9 +44,9 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-vidcap = cv2.VideoCapture("data/compressed_14.mp4")
+vidcap = cv2.VideoCapture("output_video.mp4")
 fps = float(vidcap.get(cv2.CAP_PROP_FPS))
-out = cv2.VideoWriter('output_video.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
+out = cv2.VideoWriter('output_video_quad.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
 
 new_img = None
 success, prev_img = vidcap.read()
