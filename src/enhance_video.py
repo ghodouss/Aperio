@@ -10,7 +10,7 @@ def root_mean_squared_error(y_true, y_pred):
     return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1)) 
 
 
-model = load_model("weights/deepCNN.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
+model = load_model("weights/NoSmalls28.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
 
 
 def enhance_cv_img(cv2_img, factor=4):
@@ -61,8 +61,8 @@ for iter in range(3):
 
             interp = get_interpolation(prev_img, new_img)
 
-            enhanced_prev_img = enhance_cv_img(prev_img, factor=1)
-            enhanced_interped = enhance_cv_img(interp, factor=2)
+            enhanced_prev_img = enhance_cv_img(prev_img, factor=1.5)
+            enhanced_interped = enhance_cv_img(interp, factor=2.5)
 
             out.write(enhanced_prev_img)
             out.write(enhanced_interped)
