@@ -10,7 +10,7 @@ def root_mean_squared_error(y_true, y_pred):
     return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1)) 
 
 
-model = load_model("weights/NoSmalls28.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
+model = load_model("weights/NoSmalls32.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
 
 
 def enhance_cv_img(cv2_img, factor=4):
@@ -44,7 +44,7 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-for iter in range(1):
+for iter in range(3):
     vidcap = cv2.VideoCapture("vid" + str(iter) + ".mp4")
     fps = float(vidcap.get(cv2.CAP_PROP_FPS))
     out = cv2.VideoWriter("vid" + str(iter+1) + ".mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
