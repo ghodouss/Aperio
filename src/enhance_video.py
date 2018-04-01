@@ -44,7 +44,7 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-for iter in range(3):
+for iter in range(1):
     vidcap = cv2.VideoCapture("vid" + str(iter) + ".mp4")
     fps = float(vidcap.get(cv2.CAP_PROP_FPS))
     out = cv2.VideoWriter("vid" + str(iter+1) + ".mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
@@ -61,8 +61,8 @@ for iter in range(3):
 
             interp = get_interpolation(prev_img, new_img)
 
-            enhanced_prev_img = enhance_cv_img(prev_img, factor=1.5)
-            enhanced_interped = enhance_cv_img(interp, factor=2.5)
+            enhanced_prev_img = enhance_cv_img(prev_img, factor=1.25)
+            enhanced_interped = enhance_cv_img(interp, factor=2)
 
             out.write(enhanced_prev_img)
             out.write(enhanced_interped)
