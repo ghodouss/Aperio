@@ -41,7 +41,7 @@ def get_interpolation(img1, img2):
 
     return interpolation
 
-vidcap = cv2.VideoCapture("../notebooks/data/compressed_14.mp4")
+vidcap = cv2.VideoCapture("data/compressed_14.mp4")
 
 
 out = cv2.VideoWriter('output_video.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 14, (360, 360), isColor=True)
