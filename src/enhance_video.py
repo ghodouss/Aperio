@@ -65,7 +65,7 @@ while success:
         enhanced_prev_img = enhance_cv_img(prev_img, factor=4)
         enhanced_interped = enhance_cv_img(interp, factor=8)
 
-        out.write(prev_img)
+        out.write(enhanced_prev_img)
         out.write(enhanced_interped)
         
 
