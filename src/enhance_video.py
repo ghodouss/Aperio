@@ -44,40 +44,34 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-vidcap = cv2.VideoCapture("output_video.mp4")
-fps = float(vidcap.get(cv2.CAP_PROP_FPS))
-out = cv2.VideoWriter('output_video_quad.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
+for iter in range(3):
+    vidcap = cv2.VideoCapture("vid" + str(iter) + ".mp4")
+    fps = float(vidcap.get(cv2.CAP_PROP_FPS))
+    out = cv2.VideoWriter("vid" + str(iter+1) + ".mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
 
-new_img = None
-success, prev_img = vidcap.read()
+    new_img = None
+    success, prev_img = vidcap.read()
 
-count = 1
+    count = 1
 
-while success:
-    success, new_img = vidcap.read()
+    while success:
+        success, new_img = vidcap.read()
 
-    if success:
-    
-        interp= get_interpolation(prev_img, new_img)
+        if success:
 
+            interp = get_interpolation(prev_img, new_img)
 
-        
-        enhanced_prev_img = enhance_cv_img(prev_img, factor=4)
-        enhanced_interped = enhance_cv_img(interp, factor=8)
+            enhanced_prev_img = enhance_cv_img(prev_img, factor=1)
+            enhanced_interped = enhance_cv_img(interp, factor=2)
 
-        out.write(enhanced_prev_img)
-        out.write(enhanced_interped)
-        
+            out.write(enhanced_prev_img)
+            out.write(enhanced_interped)
 
-        #out.write(prev_img)
+            prev_img = new_img
 
-        #out.write(interp.astype('uint8'))
+            print(count)
+            count += 1
 
-        prev_img = new_img
-
-        print(count)
-        count += 1
-
-vidcap.release()
-out.release()
+    vidcap.release()
+    out.release()
 
