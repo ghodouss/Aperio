@@ -10,12 +10,13 @@ def root_mean_squared_error(y_true, y_pred):
     return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1)) 
 
 
-model = load_model("weights/baseCNN.h5py", custom_objects={'root_mean_squared_error':root_mean_squared_error})
+model = load_model("weights/deepCNN.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
+
 
 def enhance_cv_img(cv2_img):
 
-    new_img =  cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
-    pil_im = Image.fromarray(cv2_img.astype('uint8'))
+    new_img = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
+    pil_im = Image.fromarray(new_img.astype('uint8'))
 
     enhancer = enhance.Sharpness(pil_im)
     enhanced = enhancer.enhance(4)
@@ -23,15 +24,16 @@ def enhance_cv_img(cv2_img):
 
     return cvImage
 
+
 def get_interpolation(img1, img2):
 
-    r1 = img1[ :, :, 0]
-    g1 = img1[ :, :, 1]
-    b1 = img1[ :, :, 2]
+    r1 = img1[:, :, 0]
+    g1 = img1[:, :, 1]
+    b1 = img1[:, :, 2]
 
-    r2 = img2[ :, :, 0]
-    g2 = img2[ :, :, 1]
-    b2 = img2[ :, :, 2]
+    r2 = img2[:, :, 0]
+    g2 = img2[:, :, 1]
+    b2 = img2[:, :, 2]
 
     X = np.stack([r1, r2, g1, g2, b1, b2], axis=-1)
 
@@ -41,10 +43,10 @@ def get_interpolation(img1, img2):
 
     return interpolation
 
+
 vidcap = cv2.VideoCapture("data/compressed_14.mp4")
-
-
-out = cv2.VideoWriter('output_video.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 14, (360, 360), isColor=True)
+fps = float(vidcap.get(cv2.CAP_PROP_FPS))
+out = cv2.VideoWriter('output_video.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
 
 new_img = None
 success, prev_img = vidcap.read()
@@ -67,7 +69,7 @@ while success:
         prev_img = new_img
 
         print(count)
-        count +=1
+        count += 1
 
 vidcap.release()
 out.release()
