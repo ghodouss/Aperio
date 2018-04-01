@@ -10,7 +10,7 @@ def root_mean_squared_error(y_true, y_pred):
     return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1)) 
 
 
-model = load_model("weights/deepCNN.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
+model = load_model("weights/NoSmalls32.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
 
 
 def enhance_cv_img(cv2_img, factor=4):
@@ -44,10 +44,10 @@ def get_interpolation(img1, img2):
     return interpolation
 
 
-for iter in range(3):
-    vidcap = cv2.VideoCapture("vid" + str(iter) + ".mp4")
+def process_file(filename):
+    vidcap = cv2.VideoCapture(filename)
     fps = float(vidcap.get(cv2.CAP_PROP_FPS))
-    out = cv2.VideoWriter("vid" + str(iter+1) + ".mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
+    out = cv2.VideoWriter("/tmp/output.mp4", cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), fps * 2, (360, 360), isColor=True)
 
     new_img = None
     success, prev_img = vidcap.read()
@@ -61,7 +61,7 @@ for iter in range(3):
 
             interp = get_interpolation(prev_img, new_img)
 
-            enhanced_prev_img = enhance_cv_img(prev_img, factor=1)
+            enhanced_prev_img = enhance_cv_img(prev_img, factor=1.25)
             enhanced_interped = enhance_cv_img(interp, factor=2)
 
             out.write(enhanced_prev_img)
@@ -74,4 +74,6 @@ for iter in range(3):
 
     vidcap.release()
     out.release()
+
+    return "/tmp/output.mp4"
 
