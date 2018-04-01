@@ -13,13 +13,13 @@ def root_mean_squared_error(y_true, y_pred):
 model = load_model("weights/deepCNN.h5py", custom_objects={'root_mean_squared_error': root_mean_squared_error})
 
 
-def enhance_cv_img(cv2_img):
+def enhance_cv_img(cv2_img, factor=4):
 
     new_img = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
     pil_im = Image.fromarray(new_img.astype('uint8'))
 
     enhancer = enhance.Sharpness(pil_im)
-    enhanced = enhancer.enhance(4)
+    enhanced = enhancer.enhance(factor)
     cvImage = cv2.cvtColor(np.array(enhanced), cv2.COLOR_RGB2BGR)
 
     return cvImage
@@ -58,13 +58,20 @@ while success:
 
     if success:
     
-        interped = get_interpolation(prev_img, new_img)
+        interp= get_interpolation(prev_img, new_img)
 
-        enhanced_prev_img = enhance_cv_img(prev_img)
-        enhanced_interped = enhance_cv_img(interped)
+
+        
+        enhanced_prev_img = enhance_cv_img(prev_img, factor=4)
+        enhanced_interped = enhance_cv_img(interp, factor=8)
 
         out.write(enhanced_prev_img)
         out.write(enhanced_interped)
+        
+
+        #out.write(prev_img)
+
+        #out.write(interp.astype('uint8'))
 
         prev_img = new_img
 
