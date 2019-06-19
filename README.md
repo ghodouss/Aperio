@@ -7,11 +7,14 @@ Video streaming is sometimes bad. Proccessing has gotten much more powerful. Ide
 ##  Layout
 
 Notebooks Directory: Various exploratory Jupyter notebooks
+
 Aperio-Web: Our Web Directory
+
 Src: Final Model and Python Backend
 
 ## Research
 Published Paper: https://arxiv.org/pdf/1809.05286.pdf
+
 Lightweight Blog Poset: http://datawithasmile.com/2018/04/03/aper-io-36-hours-of-pizza-rat/
 
 
